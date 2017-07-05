@@ -1,8 +1,8 @@
 {
-    "name": "integrateideas/InspiniaTheme",
+    "name": "integrateideas/inspiniaTheme",
     "description": "InspiniaTheme plugin for CakePHP",
     "type": "cakephp-plugin",
-    "homepage": "https://github.com/integrateideas/cake3Themes/InspiniaTheme",
+    "homepage": "https://github.com/integrateideas/cake3Themes",
     "authors": [
        {
            "name":"Integrateideas",
@@ -14,7 +14,7 @@
     "repositories": [
        {
            "type": "vcs",
-           "url": "https://github.com/integrateideas/cake3Themes/InspiniaTheme"
+           "url": "https://github.com/integrateideas/cake3Themes"
        } 
     ],
     "require": {
