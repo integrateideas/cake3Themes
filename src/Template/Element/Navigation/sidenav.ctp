@@ -22,32 +22,56 @@
             </div>
           </li>
 <?php
-// pr($sideNav); die; 
-  $controllers = $sideNav;
+$menuItems = $sideNav;
+foreach($menuItems as $key => $value) {
+  $childrenExist = isset($value['children']) && count($value['children']) > 0 ? true : false ;  
 
-  foreach($controllers as $key => $value) {
-    $underscore = \Cake\Utility\Inflector::underscore($key);
-    $humanize = \Cake\Utility\Inflector::humanize($underscore);
-    $controllerName = $key;
-    $actionCount = count($value['actions']);
-    if(!isset($value['class'])) {
-      $value['class'] = '';
-    }
+  if(!$value['show']) {
+    continue;
+  }
+
 ?>
 
-<li class="">
-<a href="#"><i class=<?= '"fa '.$value['class'].'"' ?>></i> <span class="nav-label"><?= $humanize ?></span>
-  <?= $actionCount ? '<span class="fa arrow"></span>' : '' ?>
-</a>    
-  <?php if($actionCount) { ?> 
-    <ul class="nav nav-second-level">
-      <?php foreach ($value['actions'] as $key => $value) {?>
-      <li><?= $this->Html->link(__($key), ['controller'=>$controllerName,'action' => $value]) ?></li>
-      <?php } ?>
-    </ul>
-   <?php } ?>
+<li <?= $value['active'] ? 'class="active"' : 'class=""'?>   >
+    <a href="<?= $this->Url->build($value['link']);?>"><i class="fa fa-sitemap"></i> <span class="nav-label"><?= $key?> </span><?= $childrenExist ? '<span class="fa arrow"></span>' : '' ?></a>
+    <?php 
+       //if child exists
+       if($childrenExist){
+          echo '<ul class="nav nav-second-level collapse">';
+          foreach ($value['children'] as $childKey => $childValue) {
+            if(!$childValue['show']) {
+              continue;
+            }          
+          $grandChildrenExist = isset($childValue['children']) && count($childValue['children']) > 0 ? true : false ;  
+    ?>
+
+        <li>
+          <a href="<?= $this->Url->build($childValue['link']);?>"><?= $childKey;?><?= $grandChildrenExist ? '<span class="fa arrow"></span>' : '' ?></a>
+              <?php 
+                //if grandchild exists
+               if($grandChildrenExist){
+                    echo '<ul class="nav nav-third-level">';
+                  foreach ($childValue['children'] as $grandChildKey => $grandChildValue) {
+                    if(!$grandChildValue['show']) {
+                        continue;
+                      }
+              ?>
+              
+                <li>
+                    <a href="<?= $this->Url->build($grandChildValue['link']);?>"><?= $grandChildKey ?></a>
+                </li>
+            
+            <?php }
+              echo "</ul>";
+            }?>
+        </li>
+    <?php }
+        echo "</ul>";
+     }
+    ?>
 </li>
-<?php } ?>
+
+<?php }?>
 </ul>
 </div>
 </nav>
