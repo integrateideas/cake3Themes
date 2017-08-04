@@ -1,5 +1,5 @@
-<?php 
-$cakeDescription = 'CapView | Application';
+<?php
+$cakeDescription =  $title.'| Application';
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +31,11 @@ $cakeDescription = 'CapView | Application';
 <body class="gray-bg">
   <?= $this->Flash->render() ?>
   <?= $this->Flash->render('auth', ['element' => 'Flash/error']) ?>
-    <?= $this->fetch('content'); ?>
+    <!-- Content part starts -->
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <?= $this->fetch('content'); ?>
+    </div>
+    <!-- content part ends -->
 
     <?= $this->Html->script('jquery-2.1.1') ?>
     <?= $this->Html->script('bootstrap.min') ?>
