@@ -17,10 +17,8 @@ Installation
 Usage
 
 - Create app_form.php in config and add this :
-
-	<!--
-	/**<?php
-
+      <?php
+	
 	return [
 	        'button' => '<div class="form-group"><div class="col-sm-4 col-sm-offset-2"><button class="btn btn-primary" {{attrs}}>{{text}}</button></div></div>',
 	        'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}}>',
@@ -55,7 +53,7 @@ Usage
 	        'submitContainer' => '<div class="submit">{{content}}</div>',
 	    ];
 
-	?> -->
+	?> 
 
 - Then load it  in src/View/AppView.php in initialize function :
 	 
@@ -68,8 +66,11 @@ Usage
 	$this->viewBuilder()->theme('InspiniaTheme');
 
 - Create navigation.php file in config and create menu in it.
-	<!--If a menu has children, then the link for the menu must always be #-->
-	<!--All links must be in the form of ['controller' => 'ControllerName', 'action' =>'action name' ] -->
+	
+	If a menu has children, then the link for the menu must always be #
+	
+	All links must be in the form of ['controller' => 'ControllerName', 'action' =>'action name' ] 
+	
 	Example:
 		<?php
 		use Cake\Core\Configure;
@@ -106,15 +107,16 @@ Usage
 	
 	public function beforRendor(Event $event){
 
-		if($this->response->getStatusCode() == 200) {
+	 if($this->response->getStatusCode() == 200) {
             $user = $this->Auth->user();
             $this->viewBuilder()->theme('InspiniaTheme');
             $nav = $this->checkLink(Configure::read('NavigationMenu'), $user->role['name']);
             $this->set('sideNav',$nav['children']);
         }
 	}	
-
-	<!-- If there is no Roles table in your Application, then set 'role_name' blank-->
+	
+    If there is no Roles table in your Application, then set 'role_name' blank
+	 
     public function beforeFilter(Event $event)
     {
         $user = $this->Auth->user();
@@ -141,7 +143,7 @@ Usage
         $check = 0;
         foreach($nav as $key => &$value){
             
-            //Figure out active class
+           Figure out active class
             if($value['link'] == '#'){
                 $response = $this->checkLink($value['children'], $role);
                 $value['children'] = $response['children'];
@@ -153,7 +155,7 @@ Usage
             if(isset($value['active']) && $value['active']){
                 $check = 1;
             }
-            //Figure out whether to show or not
+            Figure out whether to show or not
             if($role){
                 $show = 0;
                 //role is not in show_to_roles
