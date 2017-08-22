@@ -27,7 +27,7 @@ Usage
 	        'dateWidget' => '{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}{{meridian}}',
 	        'error' => '<div class="error-message">{{content}}</div>',
 	        'errorList' => '<ul>{{content}}</ul>',
-	        'errorItem' => '<li>{{text}}</li>',
+	        'errorItem' => '<ul>{{text}}</ul>',
 	        'file' => '<input type="file" name="{{name}}"{{attrs}}>',
 	        'fieldset' => '<fieldset{{attrs}}>{{content}}</fieldset>',
 	        'formStart' => '<div class="ibox-content"><form class="form-horizontal" {{attrs}}>',
