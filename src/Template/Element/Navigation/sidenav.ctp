@@ -29,11 +29,14 @@ foreach($menuItems as $key => $value) {
   if(!$value['show']) {
     continue;
   }
+  if(!isset($value['class'])){
+    $value['class'] = ''; 
+  }
 
 ?>
 
 <li <?= $value['active'] ? 'class="active"' : 'class=""'?>   >
-    <a href="<?= $this->Url->build($value['link']);?>"><i class="fa fa-sitemap"></i> <span class="nav-label"><?= $key?> </span><?= $childrenExist ? '<span class="fa arrow"></span>' : '' ?></a>
+    <a href="<?= $this->Url->build($value['link']);?>"><i class="<?php echo $value['class']?>"></i> <span class="nav-label"><?= $key?> </span><?= $childrenExist ? '<span class="fa arrow"></span>' : '' ?></a>
     <?php 
        //if child exists
        if($childrenExist){
