@@ -22,7 +22,10 @@
             </div>
           </li>
 <?php
-$menuItems = $sideNav;
+$menuItems = [];
+if(isset($sideNav) && !empty($sideNav)){
+  $menuItems = $sideNav;
+}
 foreach($menuItems as $key => $value) {
   $childrenExist = isset($value['children']) && count($value['children']) > 0 ? true : false ;  
 
