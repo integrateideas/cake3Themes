@@ -72,7 +72,8 @@ Usage
 	<!--If a menu has children, then the link for the menu must always be #-->
 	<!--All links must be in the form of ['controller' => 'ControllerName', 'action' =>'action name' ] -->
 	Example:
-		<?php
+		```
+    <?php
 		use Cake\Core\Configure;
 		return [ 'Menu' =>
                  [
@@ -98,13 +99,14 @@ Usage
                   ]
                ]
         ?>
+        ```
 - Load navigation.php file in bootsrap.php
 	if (file_exists(CONFIG . 'navigation.php')) {
    		Configure::load('navigation');
 	}
 
 - Then in your AppController, add the below content in the related functions:
-	
+	```
 	public function beforRendor(Event $event){
 
 		if($this->response->getStatusCode() == 200) {
@@ -182,5 +184,6 @@ Usage
     }
     return ['children' => $nav, 'active' => $check];
   }
+  ```
 
 
