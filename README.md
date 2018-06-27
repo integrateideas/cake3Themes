@@ -4,7 +4,7 @@ Installation
 
 - composer config repositories.integrateideas vcs https://github.com/integrateideas/cake3Themes.git 
 
-- composer require "integrateideas/inspiniaTheme":"dev-InspiniaTheme"
+- composer require "integrateideas/inspiniaTheme":"dev-InspiniaTheme3.6"
 
 - Then load the plugin by running
 	
