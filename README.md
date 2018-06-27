@@ -72,7 +72,8 @@ Usage
 	<!--If a menu has children, then the link for the menu must always be #-->
 	<!--All links must be in the form of ['controller' => 'ControllerName', 'action' =>'action name' ] -->
 	Example:
-		```
+		
+    ```
     <?php
 		use Cake\Core\Configure;
 		return [ 'Menu' =>
@@ -106,7 +107,8 @@ Usage
 	}
 
 - Then in your AppController, add the below content in the related functions:
-	```
+	
+  ```
 	public function beforRendor(Event $event){
 
 		if($this->response->getStatusCode() == 200) {
