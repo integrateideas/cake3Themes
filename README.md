@@ -104,7 +104,7 @@ Usage
 
 - Then in your AppController, add the below content in the related functions:
 	
-	public function beforRendor(Event $event){
+	public function beforeRender(Event $event){
 
 		if($this->response->getStatusCode() == 200) {
             $user = $this->Auth->user();
@@ -124,56 +124,51 @@ Usage
      }
 
 
-    public function beforeFilter(Event $event)
-    {
-        $user = $this->Auth->user();
-        // pr($user);
-        $sideNavData = ['id'=>$user['id'],'first_name' => $user['first_name'],'last_name' => $user['last_name'],'role_name' => $user['role']['name'],];
-        $this->set('sideNavData', $sideNavData);
-     }
+	 public function checkLink($nav = [], $role = false){
+      $currentLink = [
+      'controller' => $this->request->params['controller'],
+      'action' => $this->request->params['action']
+      ];
+      $check = 0;
+      foreach($nav as $key => &$value){
+      //Figure out active class
+        if($value['link'] == '#'){
+          $response = $this->checkLink($value['children'], $role);
+          $value['children'] = $response['children'];
+          $value['active'] = $response['active'];
+        }else {
+          // pr('here'); die;
+          if(!is_array($value['link'])){
+            $value['active'] = '';
 
-
-	public function checkLink($nav = [], $role = false){
-        $currentLink = [
-                'controller' => $this->request->params['controller'],
-                'action' => $this->request->params['action']
-          ];
-        $check = 0;
-        foreach($nav as $key => &$value){
-            
-            //Figure out active class
-            if($value['link'] == '#'){
-                $response = $this->checkLink($value['children'], $role);
-                $value['children'] = $response['children'];
-                $value['active'] = $response['active'];
-            } else {
-                $value['active'] = empty(array_diff($currentLink, $value['link'])) ? 1 : 0;
-            }
-            
-            if(isset($value['active']) && $value['active']){
-                $check = 1;
-            }
-            //Figure out whether to show or not
-            if($role){
-                $show = 0;
-                //role is not in show_to_roles
-                if(empty($value['show_to_roles'])) {
-                  $show = 1;
-                } elseif (in_array($role, $value['show_to_roles'])) {
-                  $show = 1;
-                } 
-                if($show){
-                  if(empty($value['hide_from_roles'])) {
-                    $show = 1;
-                  } elseif (in_array($role, $value['hide_from_roles'])) {
-                    $show = 0;
-                  }   
-                }
-                $value['show'] = $show;
-            } else {
-                $value['show'] = 1;
-            }
+          }else{
+            $value['active'] = empty(array_diff($currentLink, $value['link'])) ? 1 : 0;          
+          }
         }
-        return ['children' => $nav, 'active' => $check];
-    } 
 
+        if(isset($value['active']) && $value['active']){
+          $check = 1;
+        }
+      //Figure out whether to show or not
+        if($role){
+          $show = 0;
+      //role is not in show_to_roles
+          if(empty($value['show_to_roles'])) {
+            $show = 1;
+          } elseif (in_array($role, $value['show_to_roles'])) {
+            $show = 1;
+          } 
+          if($show){
+            if(empty($value['hide_from_roles'])) {
+              $show = 1;
+            } elseif (in_array($role, $value['hide_from_roles'])) {
+              $show = 0;
+            }   
+          }
+          $value['show'] = $show;
+        } else {
+          $value['show'] = 1;
+        }
+      }
+      return ['children' => $nav, 'active' => $check];
+  }
