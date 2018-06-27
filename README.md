@@ -4,7 +4,7 @@ Installation
 
 - composer config repositories.integrateideas vcs https://github.com/integrateideas/cake3Themes.git 
 
-- composer require "integrateideas/inspiniaTheme":"dev-InspiniaTheme"
+- composer require "integrateideas/inspiniaTheme":"dev-InspiniaTheme3.6"
 
 - Then load the plugin by running
 	
@@ -66,7 +66,7 @@ Usage
 
 - Then load this theme in src/Controller/AppController.php in beforeRender function:
 	
-	$this->viewBuilder()->theme('InspiniaTheme');
+	$this->viewBuilder()->setTheme('InspiniaTheme');
 
 - Create navigation.php file in config and create menu in it.
 	<!--If a menu has children, then the link for the menu must always be #-->
@@ -109,7 +109,7 @@ Usage
 
 		if($this->response->getStatusCode() == 200) {
             $user = $this->Auth->user();
-            $this->viewBuilder()->theme('InspiniaTheme');
+            $this->viewBuilder()->setTheme('InspiniaTheme');
             $nav = $this->checkLink(Configure::read('NavigationMenu'), $user->role['name']);
             $this->set('sideNav',$nav['children']);
         }
