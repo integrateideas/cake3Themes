@@ -2,9 +2,9 @@ Installation
 
 - You can install this plugin into your CakePHP application using composer by running the following commands in the terminal.
 
-- composer config repositories.integrateideas vcs https://github.com/integrateideas/taskMaster 
+- composer config repositories.integrateideas vcs https://github.com/integrateideas/cake3Themes.git
 
-- composer require "integrateideas/inspiniaTheme" : "dev-InspiniaTheme"
+- composer require "integrateideas/inspiniaTheme":"dev-InspiniaTheme"
 
 - Then load the plugin by running
 	
@@ -18,7 +18,7 @@ Usage
 
 - Create app_form.php in config and add this :
 
-	/* 
+	```
 	<?php
 
 	return [
@@ -55,7 +55,8 @@ Usage
 	        'submitContainer' => '<div class="submit">{{content}}</div>',
 	    ];
 
-	?> */
+	?> 
+  ```
 
 - Then load it  in src/View/AppView.php in initialize function :
 	 
@@ -71,7 +72,9 @@ Usage
 	<!--If a menu has children, then the link for the menu must always be #-->
 	<!--All links must be in the form of ['controller' => 'ControllerName', 'action' =>'action name' ] -->
 	Example:
-		<?php
+		
+    ```
+    <?php
 		use Cake\Core\Configure;
 		return [ 'Menu' =>
                  [
@@ -97,6 +100,7 @@ Usage
                   ]
                ]
         ?>
+        ```
 - Load navigation.php file in bootsrap.php
 	if (file_exists(CONFIG . 'navigation.php')) {
    		Configure::load('navigation');
@@ -104,6 +108,7 @@ Usage
 
 - Then in your AppController, add the below content in the related functions:
 	
+  ```
 	public function beforRendor(Event $event){
 
 		if($this->response->getStatusCode() == 200) {
@@ -134,46 +139,53 @@ Usage
 
 
 	public function checkLink($nav = [], $role = false){
-        $currentLink = [
-                'controller' => $this->request->params['controller'],
-                'action' => $this->request->params['action']
-          ];
-        $check = 0;
-        foreach($nav as $key => &$value){
-            
-            //Figure out active class
-            if($value['link'] == '#'){
-                $response = $this->checkLink($value['children'], $role);
-                $value['children'] = $response['children'];
-                $value['active'] = $response['active'];
-            } else {
-                $value['active'] = empty(array_diff($currentLink, $value['link'])) ? 1 : 0;
-            }
-            
-            if(isset($value['active']) && $value['active']){
-                $check = 1;
-            }
-            //Figure out whether to show or not
-            if($role){
-                $show = 0;
-                //role is not in show_to_roles
-                if(empty($value['show_to_roles'])) {
-                  $show = 1;
-                } elseif (in_array($role, $value['show_to_roles'])) {
-                  $show = 1;
-                } 
-                if($show){
-                  if(empty($value['hide_from_roles'])) {
-                    $show = 1;
-                  } elseif (in_array($role, $value['hide_from_roles'])) {
-                    $show = 0;
-                  }   
-                }
-                $value['show'] = $show;
-            } else {
-                $value['show'] = 1;
-            }
+    $currentLink = [
+    'controller' => $this->request->params['controller'],
+    'action' => $this->request->params['action']
+    ];
+    $check = 0;
+    foreach($nav as $key => &$value){
+    //Figure out active class
+      if($value['link'] == '#'){
+        $response = $this->checkLink($value['children'], $role);
+        $value['children'] = $response['children'];
+        $value['active'] = $response['active'];
+      }else {
+        // pr('here'); die;
+        if(!is_array($value['link'])){
+          $value['active'] = '';
+
+        }else{
+          $value['active'] = empty(array_diff($currentLink, $value['link'])) ? 1 : 0;         
         }
-        return ['children' => $nav, 'active' => $check];
-    } 
+      }
+
+      if(isset($value['active']) && $value['active']){
+        $check = 1;
+      }
+    //Figure out whether to show or not
+      if($role){
+        $show = 0;
+    //role is not in show_to_roles
+        if(empty($value['show_to_roles'])) {
+          $show = 1;
+        } elseif (in_array($role, $value['show_to_roles'])) {
+          $show = 1;
+        }
+        if($show){
+          if(empty($value['hide_from_roles'])) {
+            $show = 1;
+          } elseif (in_array($role, $value['hide_from_roles'])) {
+            $show = 0;
+          }  
+        }
+        $value['show'] = $show;
+      } else {
+        $value['show'] = 1;
+      }
+    }
+    return ['children' => $nav, 'active' => $check];
+  }
+  ```
+
 
