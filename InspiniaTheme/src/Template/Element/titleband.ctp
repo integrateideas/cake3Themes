@@ -1,10 +1,10 @@
 <?php 
 
 //Inflecting the names of the controller
-$underscore = \Cake\Utility\Inflector::underscore($this->request->params['controller']);
+$underscore = \Cake\Utility\Inflector::underscore($this->request->getParam('controller'));
 $humanize = \Cake\Utility\Inflector::humanize($underscore);
 
-$underscoreAction = \Cake\Utility\Inflector::underscore($this->request->params['action']);
+$underscoreAction = \Cake\Utility\Inflector::underscore($this->request->getParam('action'));
 $humanizeAction = \Cake\Utility\Inflector::humanize($underscoreAction);
 ?>
                 
@@ -27,7 +27,7 @@ $humanizeAction = \Cake\Utility\Inflector::humanize($underscoreAction);
                    <?php if($humanize == $humanizeAction) {
                         echo 'Settings';
                         } else { 
-                       echo $this->Html->link($humanize,"/".$this->request->params['controller']); 
+                       echo $this->Html->link($humanize,"/".$this->request->getParam('controller')); 
                         }
                  }else{ 
                     echo $humanize;
@@ -35,7 +35,7 @@ $humanizeAction = \Cake\Utility\Inflector::humanize($underscoreAction);
             </li>
             <?php if(!($humanizeAction == 'Index') && ($humanize != 'Reports')){ ?>
             <li class="active">
-                <strong><?= $humanizeAction; //ucfirst($this->request->params['action']) ?></strong>
+                <strong><?= $humanizeAction; //ucfirst($this->request->getParam('action')) ?></strong>
             </li>
             <?php } ?>
         </ol>
